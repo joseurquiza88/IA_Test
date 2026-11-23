@@ -1,0 +1,258 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Dashboard de plantilla y rotación</title>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
+<style>
+:root{--bg:#FFF7E3;--card:#FFFCF3;--ink:#3A2A5E;--mut:#7A6B9B;--v1:#EDE4FA;--v2:#D3C2F0;--v3:#B59BE6;--v4:#8E6FCF;--peach:#F5C4A6;--line:#EADFC6}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:"Trebuchet MS","Segoe UI",sans-serif;line-height:1.4}
+header{padding:22px 28px 4px}
+h1{margin:0;font-size:24px}
+header p{margin:4px 0 0;color:var(--mut);font-size:14px}
+.bar{display:flex;flex-wrap:wrap;gap:12px;align-items:end;margin:14px 28px;padding:14px 16px;background:var(--card);border:1px solid var(--line);border-radius:14px}
+.f{display:flex;flex-direction:column;gap:4px;font-size:12px;color:var(--mut)}
+.f.grow{flex:1 1 320px}
+input,select,button{font:inherit;font-size:14px;color:var(--ink);padding:8px 10px;border:1px solid var(--v2);border-radius:9px;background:#fff}
+button{background:var(--v3);border-color:var(--v3);color:#fff;font-weight:700;cursor:pointer}
+button:hover{background:var(--v4)}
+button.sec{background:var(--v1);color:var(--ink);border-color:var(--v2)}
+button.sec:hover{background:var(--v2)}
+:focus-visible{outline:3px solid var(--v4);outline-offset:2px}
+#st{margin:0 28px;font-size:13px;color:var(--mut)}
+#st.err{color:#B4532A;font-weight:700}
+section.blk{margin:22px 28px 0}
+.blk h2.t{margin:0 0 2px;font-size:20px}
+.blk>p{margin:0 0 12px;color:var(--mut);font-size:13px}
+.kpis{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:12px;margin-bottom:14px}
+.kpi{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:12px 14px}
+.kpi span{font-size:12px;color:var(--mut)}
+.kpi b{display:block;font-size:24px;margin-top:2px}
+.kpi.hero{background:var(--v1);border-color:var(--v2);grid-column:span 2}
+.kpi.hero b{font-size:40px;color:var(--v4)}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(320px,1fr));gap:14px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:14px 16px}
+.card.wide{grid-column:span 2}
+.card h3{margin:0 0 2px;font-size:15px}
+.card small{color:var(--mut);font-size:12px}
+.ch{position:relative;height:280px;margin-top:8px}
+.rot{background:#FBEEDD;border:1px solid var(--peach);border-radius:16px;padding:16px;margin-top:30px}
+.rot .kpi{background:#FFFAF2;border-color:var(--peach)}
+.rot .kpi b{font-size:20px}
+.rot .card{background:#FFFAF2;border-color:var(--peach)}
+.rot .ch{height:220px}
+.rot .t{font-size:17px}
+footer{margin:22px 28px 28px;font-size:12px;color:var(--mut);max-width:900px}
+@media(max-width:700px){.card.wide,.kpi.hero{grid-column:span 1}.grid{grid-template-columns:1fr}.bar,section.blk,#st,footer{margin-left:14px;margin-right:14px}header{padding:18px 14px 4px}}
+</style>
+</head>
+<body>
+<header>
+  <h1>Plantilla y rotación</h1>
+  <p>Cómo está compuesta la plantilla hoy y qué pasó con las personas que se fueron.</p>
+</header>
+
+<section class="bar" aria-label="Conexión">
+  <label class="f grow">URL del Apps Script (termina en /exec)
+    <input id="url" type="url" placeholder="https://script.google.com/macros/s/.../exec">
+  </label>
+  <button id="btn">Actualizar</button>
+  <label class="f">Actualización automática
+    <select id="auto">
+      <option value="0">Desactivada</option>
+      <option value="30">Cada 30 segundos</option>
+      <option value="60">Cada 1 minuto</option>
+      <option value="300">Cada 5 minutos</option>
+      <option value="900">Cada 15 minutos</option>
+    </select>
+  </label>
+</section>
+<p id="st" role="status">Pegá la URL de tu Apps Script y tocá Actualizar.</p>
+<section class="bar" aria-label="Filtros" id="filters"></section>
+
+<section class="blk" aria-label="Plantilla actual">
+  <h2 class="t">Plantilla actual</h2>
+  <p>Solo personas activas. Los filtros de arriba se aplican a todo el tablero.</p>
+  <div class="kpis" id="kp"></div>
+  <div class="grid">
+    <div class="card wide"><h3>Personas por departamento</h3><small>Cantidad de personas activas</small><div class="ch"><canvas id="p1"></canvas></div></div>
+    <div class="card"><h3>Modalidad de trabajo</h3><small>Distribución de la plantilla</small><div class="ch"><canvas id="p2"></canvas></div></div>
+    <div class="card"><h3>Ciudad</h3><small>Dónde trabaja la plantilla</small><div class="ch"><canvas id="p3"></canvas></div></div>
+    <div class="card"><h3>Género</h3><small>Distribución de la plantilla</small><div class="ch"><canvas id="p4"></canvas></div></div>
+    <div class="card"><h3>Antigüedad</h3><small>Cuánto hace que están en la empresa</small><div class="ch"><canvas id="p5"></canvas></div></div>
+    <div class="card"><h3>Evaluación de desempeño</h3><small>Cantidad de personas por nivel</small><div class="ch"><canvas id="p6"></canvas></div></div>
+    <div class="card wide"><h3>Salario promedio por departamento</h3><small>Salario mensual, en pesos</small><div class="ch"><canvas id="p7"></canvas></div></div>
+  </div>
+</section>
+
+<section class="blk rot" aria-label="Rotación">
+  <h2 class="t">Rotación</h2>
+  <p>Incluye activos y bajas del conjunto filtrado.</p>
+  <div class="kpis" id="kr"></div>
+  <div class="grid">
+    <div class="card"><h3>Tasa de rotación por departamento</h3><small>El tooltip muestra bajas sobre total</small><div class="ch"><canvas id="r1"></canvas></div></div>
+    <div class="card"><h3>Bajas por mes</h3><small>Según fecha de baja</small><div class="ch"><canvas id="r2"></canvas></div></div>
+    <div class="card"><h3>Antigüedad al momento de la baja</h3><small>Meses entre ingreso y baja</small><div class="ch"><canvas id="r3"></canvas></div></div>
+    <div class="card"><h3>Rotación según evaluación</h3><small>Tasa por nivel de desempeño</small><div class="ch"><canvas id="r4"></canvas></div></div>
+  </div>
+</section>
+
+<footer>
+  La plantilla actual considera solo Estatus = Activo. Rotación = bajas / (activos + bajas) del conjunto filtrado. La antigüedad se calcula desde Fecha_ingreso hasta hoy (activos) o hasta Fecha_baja (bajas). Con pocas personas, un solo caso mueve mucho los porcentajes: conviene leer siempre la cantidad junto con la tasa.
+</footer>
+
+<script>
+const $ = id => document.getElementById(id);
+const FILTROS = ['Departamento','Puesto','Ciudad','Modalidad','Genero'];
+const INK = '#3A2A5E', GRID = '#EFE5CD';
+const PAL = ['#B59BE6','#F5C4A6','#E6D79A','#D3C2F0','#8E6FCF','#EBD9F7'];
+let RAW = [], sel = {}, timer = null, charts = {}, ex = {};
+
+const LS = {
+  get(k){ try { return localStorage.getItem(k); } catch(e){ return null; } },
+  set(k,v){ try { localStorage.setItem(k,v); } catch(e){} }
+};
+const money = n => (n||0).toLocaleString('es-AR',{style:'currency',currency:'ARS',maximumFractionDigits:0});
+const avg = a => a.length ? a.reduce((s,x)=>s+x,0)/a.length : 0;
+
+function pd(v){
+  if(!v) return null;
+  let s = String(v), m = s.match(/^(\d{4})-(\d{2})-(\d{2})/);
+  if(m) return new Date(+m[1], m[2]-1, +m[3]);
+  m = s.match(/^(\d{1,2})\/(\d{1,2})\/(\d{4})/);
+  return m ? new Date(+m[3], m[2]-1, +m[1]) : null;
+}
+const meses = (a,b) => (b.getFullYear()-a.getFullYear())*12 + b.getMonth()-a.getMonth() - (b.getDate()<a.getDate()?1:0);
+
+function prep(d){
+  return d.map(r => {
+    const b = String(r.Estatus).trim().toLowerCase() === 'baja';
+    const ing = pd(r.Fecha_ingreso), fb = pd(r.Fecha_baja);
+    return {...r, _b:b, _fb:fb, _sal:+r.Salario_mensual||0, _ev:+r.Evaluacion_desempeno||0,
+      _ant: ing ? Math.max(0, meses(ing, b && fb ? fb : new Date())) : null};
+  });
+}
+function setSt(t, err){ const e = $('st'); e.textContent = t; e.className = err ? 'err' : ''; }
+
+async function cargar(){
+  const url = $('url').value.trim();
+  if(!url){ setSt('Pegá la URL de tu Apps Script para empezar.', true); return; }
+  LS.set('pa_url', url);
+  setSt('Cargando datos…');
+  try {
+    const j = await (await fetch(url, {cache:'no-store'})).json();
+    if(!j.ok) throw new Error(j.error || 'La respuesta no tiene el formato esperado');
+    RAW = prep(j.datos); armarFiltros(); render();
+    setSt('Actualizado a las ' + new Date().toLocaleTimeString('es-AR') + ' · ' + RAW.length + ' registros');
+  } catch(e){
+    setSt('No se pudieron cargar los datos: ' + e.message + '. Revisá la URL y que el acceso sea "Cualquier persona".', true);
+  }
+}
+
+function armarFiltros(){
+  const box = $('filters'); box.innerHTML = '';
+  FILTROS.forEach(f => {
+    const vals = [...new Set(RAW.map(r => r[f]).filter(v => v !== undefined && v !== ''))].sort();
+    if(!vals.length) return;
+    if(sel[f] && !vals.includes(sel[f])) sel[f] = '';
+    const l = document.createElement('label'); l.className = 'f'; l.textContent = f.replace('Genero','Género');
+    const s = document.createElement('select');
+    s.innerHTML = '<option value="">Todos</option>' + vals.map(v => `<option${sel[f]==v?' selected':''}>${v}</option>`).join('');
+    s.onchange = () => { sel[f] = s.value; render(); };
+    l.appendChild(s); box.appendChild(l);
+  });
+  const b = document.createElement('button'); b.className = 'sec'; b.textContent = 'Limpiar filtros';
+  b.onclick = () => { sel = {}; armarFiltros(); render(); };
+  box.appendChild(b);
+}
+
+const filtrar = () => RAW.filter(r => FILTROS.every(f => !sel[f] || r[f] == sel[f]));
+const agrupar = (rows, k) => { const g = {}; rows.forEach(r => (g[r[k]] = g[r[k]] || []).push(r)); return g; };
+const kpi = (t, v, c) => `<div class="kpi ${c||''}"><span>${t}</span><b>${v}</b></div>`;
+const tipP = c => ` ${c.raw} personas (${ex.tot ? (c.raw/ex.tot*100).toFixed(0) : 0} %)`;
+
+function dibujar(id, type, labels, data, color, o = {}){
+  const ds = [{label:o.label||'', data, backgroundColor:color, borderColor:'#FFFCF3'}];
+  if(charts[id]){ const c = charts[id]; c.data.labels = labels; c.data.datasets = ds; c.update(); return; }
+  const dona = type === 'doughnut', h = o.eje === 'y';
+  const tit = t => ({display:!!t, text:t||'', color:INK});
+  charts[id] = new Chart($(id), {type, data:{labels, datasets:ds}, options:{
+    responsive:true, maintainAspectRatio:false, indexAxis:o.eje,
+    scales: dona ? {} : {
+      x:{ticks:{color:INK}, grid:{color:GRID}, beginAtZero:true, title:tit(h ? o.tit : '')},
+      y:{ticks:{color:INK, precision:0}, grid:{color:GRID}, beginAtZero:true, title:tit(h ? '' : o.tit)}
+    },
+    plugins:{legend:{display:dona, position:'bottom', labels:{color:INK}}, tooltip:{callbacks:{label:o.tip || (c => ' ' + c.raw)}}}
+  }});
+}
+const conteo = (rows, k) => { const g = agrupar(rows, k), n = Object.keys(g).sort(); return [n, n.map(x => g[x].length)]; };
+
+function render(){
+  const R = filtrar(), A = R.filter(r => !r._b), B = R.filter(r => r._b);
+  ex.tot = A.length;
+
+  // ---- Plantilla actual ----
+  const ant = A.filter(r => r._ant !== null).map(r => r._ant);
+  const noPres = A.length ? A.filter(r => r.Modalidad !== 'Presencial').length / A.length * 100 : 0;
+  $('kp').innerHTML =
+    kpi('Personas en la plantilla', A.length, 'hero') +
+    kpi('Salario promedio', money(avg(A.map(r => r._sal)))) +
+    kpi('Masa salarial mensual', money(A.reduce((s,r) => s + r._sal, 0))) +
+    kpi('Antigüedad promedio', (avg(ant)/12).toFixed(1) + ' años') +
+    kpi('Evaluación promedio', avg(A.filter(r => r._ev).map(r => r._ev)).toFixed(1)) +
+    kpi('Modalidad no presencial', noPres.toFixed(0) + ' %');
+
+  const dep = agrupar(A, 'Departamento'), dn = Object.keys(dep).sort((a,b) => dep[b].length - dep[a].length);
+  dibujar('p1','bar',dn,dn.map(d => dep[d].length),'#B59BE6',{eje:'y', tip:tipP, tit:'Personas'});
+  let [l, v] = conteo(A, 'Modalidad'); dibujar('p2','doughnut',l,v,PAL,{tip:tipP});
+  [l, v] = conteo(A, 'Ciudad'); dibujar('p3','bar',l,v,'#CDB8EE',{eje:'y', tip:tipP, tit:'Personas'});
+  [l, v] = conteo(A, 'Genero'); dibujar('p4','doughnut',l,v,PAL,{tip:tipP});
+
+  const tr = ['Menos de 1 año','1 a 2 años','2 a 3 años','3 a 5 años','Más de 5 años'], tv = [0,0,0,0,0];
+  ant.forEach(a => tv[a<12?0:a<24?1:a<36?2:a<60?3:4]++);
+  dibujar('p5','bar',tr,tv,'#8E6FCF',{tip:tipP, tit:'Personas'});
+  [l, v] = conteo(A.filter(r => r._ev), '_ev');
+  dibujar('p6','bar',l.map(e => 'Nivel ' + e),v,'#D3C2F0',{tip:tipP, tit:'Personas'});
+  dibujar('p7','bar',dn,dn.map(d => Math.round(avg(dep[d].map(r => r._sal)))),'#B59BE6',{eje:'y', tip:c => ' ' + money(c.raw)});
+
+  // ---- Rotación ----
+  const rot = R.length ? B.length / R.length * 100 : 0;
+  const antB = B.filter(r => r._ant !== null).map(r => r._ant);
+  $('kr').innerHTML = kpi('Bajas', B.length) + kpi('Tasa de rotación', rot.toFixed(1) + ' %') +
+    kpi('Antigüedad promedio al irse', antB.length ? avg(antB).toFixed(0) + ' meses' : '—');
+
+  const all = agrupar(R, 'Departamento'), an = Object.keys(all).sort();
+  ex.r1 = an.map(d => [all[d].filter(r => r._b).length, all[d].length]);
+  const tipR = k => c => ` ${c.raw} % (${ex[k][c.dataIndex][0]} de ${ex[k][c.dataIndex][1]})`;
+  dibujar('r1','bar',an,ex.r1.map(x => +(x[0]/x[1]*100).toFixed(1)),'#F5C4A6',{eje:'y', tip:tipR('r1'), tit:'% de rotación'});
+
+  const pm = {}; B.filter(r => r._fb).forEach(r => { const k = r._fb.getFullYear()*100 + r._fb.getMonth()+1; pm[k] = (pm[k]||0)+1; });
+  const mk = Object.keys(pm).sort();
+  dibujar('r2','bar',mk.map(k => k.slice(4)+'/'+k.slice(0,4)),mk.map(k => pm[k]),'#F5C4A6',{tit:'Bajas'});
+
+  const cb = [0,0,0,0,0];
+  antB.forEach(a => cb[a<=12?0:a<=24?1:a<=36?2:a<=60?3:4]++);
+  dibujar('r3','bar',['0-12','13-24','25-36','37-60','Más de 60'],cb,'#E8B48F',{tit:'Bajas'});
+
+  const ev = agrupar(R.filter(r => r._ev), '_ev'), en = Object.keys(ev).sort();
+  ex.r4 = en.map(e => [ev[e].filter(r => r._b).length, ev[e].length]);
+  dibujar('r4','bar',en.map(e => 'Nivel ' + e),ex.r4.map(x => +(x[0]/x[1]*100).toFixed(1)),'#E8B48F',{tip:tipR('r4'), tit:'% de rotación'});
+}
+
+function programar(){
+  clearInterval(timer);
+  const s = +$('auto').value; LS.set('pa_auto', s);
+  if(s > 0) timer = setInterval(cargar, s*1000);
+}
+$('btn').onclick = cargar;
+$('auto').onchange = programar;
+$('url').addEventListener('keydown', e => { if(e.key === 'Enter') cargar(); });
+$('url').value = LS.get('pa_url') || '';
+$('auto').value = LS.get('pa_auto') || '0';
+programar();
+if($('url').value) cargar();
+</script>
+</body>
+</html>
