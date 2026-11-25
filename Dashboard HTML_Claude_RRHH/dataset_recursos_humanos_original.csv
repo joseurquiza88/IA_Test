@@ -1,0 +1,51 @@
+﻿ID_empleado,Nombre,Apellido,Genero,Departamento,Puesto,Ciudad,Modalidad,Fecha_ingreso,Antiguedad_meses,Salario_mensual,Evaluacion_desempeno,Estatus,Fecha_baja
+EMP001,Ana,Pérez,Femenino,Recursos Humanos,Analista de Selección,Córdoba,Híbrido,2021-03-15,68,1850000,4,Activo,
+EMP002,Lucas,Gómez,Masculino,Tecnología,Desarrollador Backend,Remoto,Remoto,2022-08-01,51,2850000,5,Activo,
+EMP003,María,Fernández,Femenino,Finanzas,Analista Contable,Buenos Aires,Presencial,2020-11-10,72,2200000,4,Activo,
+EMP004,Santiago,López,Masculino,Comercial,Ejecutivo de Cuentas,Rosario,Híbrido,2023-02-06,45,2050000,3,Activo,
+EMP005,Valentina,Martínez,Femenino,Marketing,Analista de Marketing,Córdoba,Híbrido,2024-04-15,31,1950000,4,Activo,
+EMP006,Mateo,Rodríguez,Masculino,Operaciones,Coordinador de Operaciones,Buenos Aires,Presencial,2019-07-01,88,3100000,5,Activo,
+EMP007,Camila,Sánchez,Femenino,Tecnología,Analista QA,Remoto,Remoto,2023-09-18,38,2300000,4,Activo,
+EMP008,Tomás,Romero,Masculino,Recursos Humanos,Generalista de RRHH,Rosario,Híbrido,2022-01-10,58,2250000,4,Activo,
+EMP009,Lucía,Torres,Femenino,Atención al Cliente,Representante de Atención,Córdoba,Presencial,2025-01-20,22,1450000,3,Activo,
+EMP010,Joaquín,Álvarez,Masculino,Tecnología,Desarrollador Frontend,Remoto,Remoto,2021-06-14,65,2950000,5,Activo,
+EMP011,Florencia,Ruiz,Femenino,Finanzas,Analista de Tesorería,Buenos Aires,Híbrido,2024-02-01,33,2100000,4,Activo,
+EMP012,Benjamín,Díaz,Masculino,Logística,Analista de Logística,Rosario,Presencial,2020-05-11,78,1900000,3,Activo,
+EMP013,Martina,Acosta,Femenino,Marketing,Diseñadora UX/UI,Remoto,Remoto,2022-10-03,49,2550000,5,Activo,
+EMP014,Franco,Medina,Masculino,Comercial,Analista Comercial,Córdoba,Híbrido,2025-03-03,20,1750000,4,Activo,
+EMP015,Julieta,Herrera,Femenino,Recursos Humanos,Analista de Capacitación,Buenos Aires,Híbrido,2021-11-22,59,2150000,4,Activo,
+EMP016,Facundo,Castro,Masculino,Operaciones,Supervisor de Planta,Rosario,Presencial,2018-09-03,98,2750000,4,Activo,
+EMP017,Carolina,Ortiz,Femenino,Atención al Cliente,Supervisora de Atención,Córdoba,Híbrido,2022-04-18,55,2350000,5,Activo,
+EMP018,Thiago,Rojas,Masculino,Tecnología,Data Analyst,Remoto,Remoto,2024-07-08,28,2600000,4,Activo,
+EMP019,Agustina,Morales,Femenino,Finanzas,Controller,Buenos Aires,Híbrido,2019-02-04,93,3400000,5,Activo,
+EMP020,Nicolás,Silva,Masculino,Logística,Coordinador de Depósito,Rosario,Presencial,2023-06-12,41,2150000,3,Activo,
+EMP021,Micaela,Núñez,Femenino,Marketing,Community Manager,Córdoba,Híbrido,2025-06-02,17,1600000,4,Activo,
+EMP022,Ignacio,Cabrera,Masculino,Comercial,Gerente Comercial,Buenos Aires,Híbrido,2017-03-13,116,4200000,5,Activo,
+EMP023,Renata,Vargas,Femenino,Tecnología,Product Owner,Remoto,Remoto,2020-08-17,75,3600000,5,Activo,
+EMP024,Bruno,Molina,Masculino,Atención al Cliente,Representante de Atención,Rosario,Presencial,2024-11-04,24,1500000,3,Activo,
+EMP025,Catalina,Suárez,Femenino,Recursos Humanos,HR Business Partner,Córdoba,Híbrido,2018-04-09,103,3300000,5,Activo,
+EMP026,Emiliano,Ortega,Masculino,Operaciones,Analista de Procesos,Buenos Aires,Presencial,2023-01-16,46,2200000,4,Activo,
+EMP027,Pilar,Benítez,Femenino,Finanzas,Analista de Presupuesto,Remoto,Remoto,2025-02-10,21,2050000,4,Activo,
+EMP028,Lautaro,Ibarra,Masculino,Logística,Planificador de Demanda,Córdoba,Híbrido,2021-09-06,62,2450000,4,Activo,
+EMP029,Delfina,Acosta,Femenino,Marketing,Especialista SEO,Remoto,Remoto,2022-05-23,53,2500000,4,Activo,
+EMP030,Gabriel,Ponce,Masculino,Tecnología,Líder Técnico,Buenos Aires,Híbrido,2019-10-07,85,3900000,5,Activo,
+EMP031,Abril,Figueroa,Femenino,Atención al Cliente,Analista de Calidad,Rosario,Presencial,2025-08-18,15,1550000,3,Activo,
+EMP032,Ezequiel,Arias,Masculino,Comercial,Ejecutivo de Cuentas,Córdoba,Híbrido,2020-01-13,74,2300000,3,Baja,2026-03-31
+EMP033,Milagros,Correa,Femenino,Recursos Humanos,Analista de Administración de Personal,Buenos Aires,Presencial,2023-04-03,32,1950000,3,Baja,2025-12-15
+EMP034,Ramiro,Vega,Masculino,Tecnología,Desarrollador Backend,Remoto,Remoto,2021-12-06,55,2750000,4,Baja,2026-07-10
+EMP035,Bianca,Méndez,Femenino,Finanzas,Analista Contable,Córdoba,Híbrido,2024-01-08,24,1900000,2,Baja,2026-01-30
+EMP036,Máximo,Peralta,Masculino,Operaciones,Operario Especializado,Rosario,Presencial,2022-03-14,42,1800000,3,Baja,2025-09-19
+EMP037,Olivia,Godoy,Femenino,Marketing,Analista de Marketing,Buenos Aires,Híbrido,2020-06-01,71,2250000,4,Baja,2026-05-29
+EMP038,Dante,Navarro,Masculino,Logística,Analista de Logística,Córdoba,Presencial,2025-04-21,10,1750000,2,Baja,2026-02-27
+EMP039,Emma,Cáceres,Femenino,Atención al Cliente,Representante de Atención,Remoto,Remoto,2023-11-13,33,1650000,3,Baja,2026-08-31
+EMP040,Alejo,Márquez,Masculino,Comercial,Analista Comercial,Rosario,Híbrido,2019-05-20,78,2150000,2,Baja,2025-11-28
+EMP041,Lola,Ferreyra,Femenino,Recursos Humanos,Analista de Selección,Córdoba,Híbrido,2024-06-10,24,1850000,4,Baja,2026-06-30
+EMP042,Simón,Campos,Masculino,Tecnología,Analista QA,Remoto,Remoto,2022-02-07,41,2250000,3,Baja,2025-07-31
+EMP043,Josefina,Domínguez,Femenino,Finanzas,Analista de Tesorería,Buenos Aires,Presencial,2021-01-18,67,2100000,4,Baja,2026-09-15
+EMP044,Bautista,Miranda,Masculino,Operaciones,Coordinador de Operaciones,Rosario,Presencial,2020-09-07,67,2900000,3,Baja,2026-04-17
+EMP045,Clara,Roldán,Femenino,Marketing,Diseñadora UX/UI,Remoto,Remoto,2025-05-05,16,2200000,3,Baja,2026-10-02
+EMP046,Pedro,Sosa,Masculino,Logística,Coordinador de Depósito,Córdoba,Presencial,2018-12-03,82,2600000,2,Baja,2025-10-31
+EMP047,Alma,Paz,Femenino,Atención al Cliente,Supervisora de Atención,Buenos Aires,Híbrido,2022-07-11,43,2450000,4,Baja,2026-02-13
+EMP048,León,Quiroga,Masculino,Comercial,Ejecutivo de Cuentas,Rosario,Híbrido,2024-09-02,22,2000000,3,Baja,2026-07-31
+EMP049,Isabella,Luna,Femenino,Tecnología,Data Analyst,Remoto,Remoto,2023-03-06,33,2500000,4,Baja,2025-12-30
+EMP050,Gael,Ríos,Masculino,Recursos Humanos,Generalista de RRHH,Córdoba,Híbrido,2025-01-06,16,1800000,2,Baja,2026-05-15
